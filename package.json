@@ -1,0 +1,31 @@
+{
+  "name": "wacky-explorer",
+  "version": "0.1.0",
+  "description": "Wacky Explorer.",
+  "homepage": "https://github.com/nicl/wacky-explorer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicl/wacky-explorer.git"
+  },
+  "main": "js/app.js",
+  "dependencies": {
+    "react": "0.10.0",
+    "underscore": "1.6.0"
+  },
+  "devDependencies": {
+    "browserify": "4.1.5",
+    "reactify": "0.13.1",
+    "watchify": "0.10.1",
+    "http-server": "0.6.1"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
+  "scripts": {
+    "build": "STATIC_ROOT=./static browserify -t reactify -d . > js/bundle.js",
+    "watch": "STATIC_ROOT=./static watchify -t reactify -o js/bundle.js -v -d .",
+    "start": "STATIC_ROOT=./static http-server -c -1 -p 4567"
+  }
+}
