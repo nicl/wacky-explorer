@@ -9,7 +9,9 @@ var Actions = {
 
         ADD_PARAM: 'add-param',
         UPDATE_PARAM: 'update-param',
-        REMOVE_PARAM: 'remove-param'
+        REMOVE_PARAM: 'remove-param',
+
+        UPDATE_PARAM_SEARCH: 'update-param-search'
     },
 
 
@@ -20,10 +22,10 @@ var Actions = {
         });
     },
 
-    focusParamSearch: function () {
+    focusParamSearch: function (value) {
         Dispatcher.handleAction({
             action: this.constants.FOCUS_PARAM_SEARCH,
-            data: null,
+            data: value,
         });
     },
 
@@ -52,6 +54,13 @@ var Actions = {
         Dispatcher.handleAction({
             action: this.constants.REMOVE_PARAM,
             data: param
+        });
+    },
+
+    updateParamSearch: function (value) {
+        Dispatcher.handleAction({
+            action: this.constants.UPDATE_PARAM_SEARCH,
+            data: value
         });
     }
 };

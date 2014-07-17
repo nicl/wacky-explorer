@@ -21,7 +21,7 @@ var Param = React.createClass({
     },
 
     onChange: function (event) {
-        Actions.updateParam({ name: this.props.name, value: event.target.value});
+        Actions.updateParam({ name: this.props.name, value: event.target.value });
     },
 
     remove: function () {
@@ -56,10 +56,29 @@ var ParamsAdder = React.createClass({
         Actions.addParam({ name: name, value: '' });
     },
 
+    onChange: function (event) {
+        Actions.updateParamSearch(event.target.value);
+    },
+
+    onFocus: function () {
+        var value = this.refs.addInput.getDOMNode().value;
+        Actions.focusParamSearch(value);
+    },
+
+    onBlur: function () {
+        Actions.blur(this.props.param);
+    },
+
     render: function () {
         return (
             <div className="params-adder">
-                <input ref="addInput" />
+                <input
+                    ref="addInput"
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
+                    value={this.props.paramSearch}
+                />
                 <a onClick={this.addParam}>Add param</a>
             </div>
         );
@@ -69,7 +88,9 @@ var ParamsAdder = React.createClass({
 var Params = React.createClass({
 
     propTypes: {
-        params: React.PropTypes.array.isRequired
+        params: React.PropTypes.array.isRequired,
+        paramSearch: React.PropTypes.string.isRequired,
+        parameters: React.PropTypes.array.isRequired
     },
 
     render: function () {
@@ -80,7 +101,7 @@ var Params = React.createClass({
         return (
             <div className="params">
                 <ul className="params-list">{listItems}</ul>
-                <ParamsAdder />
+                <ParamsAdder paramSearch={this.props.paramSearch} />
             </div>
         );
     }

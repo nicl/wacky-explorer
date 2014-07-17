@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var Dispatcher = require('../dispatcher/dispatcher');
 var Actions = require('../actions/actions');
 
 var PARAM = 'param';
@@ -14,28 +13,31 @@ var Help = React.createClass({
     //   - valid values if typing in values + description too
     //   - starting help otherwise
 
-    paramSearchHints: function (data) {
-        var options = ['section', 'tag', 'show-most-viewed'];
+    paramSearchHints: function (parameters, data) {
+        var options = parameters;
         var filtered;
 
-        if (data.name === '') {
+        if (data === '') {
             filtered = options;
         } else {
             filtered = options.filter(function (option) {
-                option.match(data.name);
+                return option.name.match(data);
             });
         }
 
-        var listItems = filtered.map(function(item) {
-            return <li key={item} className="help-option">{item}</li>;
+        var listItems = filtered.map(function(p) {
+            return <li key={p.name} className="help-option">{p.name}</li>;
         });
 
         return <ul className="help-options">{listItems}</ul>;
     },
 
-    valueHints: function (data) {
-        // TODO describe valid values for param
-        return null;
+    valueHints: function (parameters, data) {
+        var paramData = parameters.filter(function (p) {
+            return p.name === data.name;
+        });
+
+        return paramData[0].description;
     },
 
     noHints: function () {
@@ -44,19 +46,21 @@ var Help = React.createClass({
     },
 
     propTypes: {
-        hasFocus: React.PropTypes.object.isRequired
+        hasFocus: React.PropTypes.object,
+        parameters: React.PropTypes.array.isRequired
     },
 
     render: function () {
         var hints;
+        var parameters = this.props.parameters;
         var hasFocus = this.props.hasFocus || {};
         var focusType = hasFocus.type;
         var focusData = hasFocus.data;
 
         if (focusType === PARAM_SEARCH) {
-            hints = this.paramSearchHints(focusData);
+            hints = this.paramSearchHints(parameters, focusData);
         } else if (focusType === PARAM) {
-            hints = this.valueHints(focusData);
+            hints = this.valueHints(parameters, focusData);
         } else {
             hints = this.noHints();
         }

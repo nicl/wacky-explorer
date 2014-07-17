@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var ParametersConfig = require('./config/parameters');
 var Store = require('./stores/store');
 var Dispatcher = require('./dispatcher/dispatcher');
 var Actions = require('./actions/actions');
@@ -14,9 +15,17 @@ var Help = require('./components/help');
 //   |- help
 //   |- results
 
-// NEXT STEP: allow addding and removing of params
+// NEXT STEP: show help
+
+var PARAM = 'param';
+var PARAM_SEARCH = 'param-search';
 
 var App = React.createClass({
+
+    propTypes: {
+        store: React.PropTypes.object.isRequired,
+        parameters: React.PropTypes.array.isRequired
+    },
 
     componentDidMount: function () {
         var that = this;
@@ -26,8 +35,23 @@ var App = React.createClass({
             case Actions.constants.ADD_PARAM:
                 that.props.store.addParam(action.data);
                 break;
+            case Actions.constants.UPDATE_PARAM:
+                that.props.store.updateParam(action.data);
+                break;
             case Actions.constants.REMOVE_PARAM:
                 that.props.store.removeParam(action.data);
+                break;
+            case Actions.constants.FOCUS_PARAM:
+                that.props.store.setFocus(PARAM, action.data);
+                break;
+            case Actions.constants.FOCUS_PARAM_SEARCH:
+                that.props.store.setFocus(PARAM_SEARCH, action.data);
+                break;
+            case Actions.constants.BLUR:
+                that.props.store.removeFocus();
+                break;
+            case Actions.constants.UPDATE_PARAM_SEARCH:
+                that.props.store.updateParamSearch(action.data);
                 break;
             }
         });
@@ -36,11 +60,20 @@ var App = React.createClass({
     render: function () {
         var params = this.props.store.params;
         var hasFocus = this.props.store.hasFocus;
+        var paramSearch = this.props.store.paramSearch;
+        var parameters = this.props.parameters;
 
         return (
             <div className="app">
-                <Params params={params} />
-                <Help hasFocus={hasFocus} />
+                <Params
+                    params={params}
+                    parameters={parameters}
+                    paramSearch={paramSearch}
+                />
+                <Help
+                    hasFocus={hasFocus}
+                    parameters={parameters}
+                />
             </div>
         );
     }
@@ -56,7 +89,7 @@ var store = new Store();
 
 var render = function () {
     React.renderComponent(
-        <App store={store}/>,
+        <App store={store} parameters={ParametersConfig}/>,
         document.getElementById('wacky-explorer')
     );
 };
