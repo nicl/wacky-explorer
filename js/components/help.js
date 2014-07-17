@@ -4,8 +4,8 @@ var React = require('react');
 var Dispatcher = require('../dispatcher/dispatcher');
 var Actions = require('../actions/actions');
 
-var NAME = 'name';
-var VALUE = 'value';
+var PARAM = 'param';
+var PARAM_SEARCH = 'param-search';
 
 var Help = React.createClass({
 
@@ -14,23 +14,7 @@ var Help = React.createClass({
     //   - valid values if typing in values + description too
     //   - starting help otherwise
 
-    setNameIsActive: function (data) {
-        this.setState({ focusType: NAME, focusParam: data });
-    },
-
-    setValueIsActive: function (data) {
-        this.setState({ focusType: VALUE, focusParam: data });
-    },
-
-    setNoneIsActive: function (data) {
-        this.setState({ focusType: null, focusParam: null });
-    },
-
-    setFocusParam: function (data) {
-        this.setState({ focusParam: data });
-    },
-
-    nameHints: function (data) {
+    paramSearchHints: function (data) {
         var options = ['section', 'tag', 'show-most-viewed'];
         var filtered;
 
@@ -59,41 +43,20 @@ var Help = React.createClass({
         return null;
     },
 
-    getInitialState: function () {
-        return {
-            focusType: null,
-            focusParam: null,
-        };
-    },
-
-    componentDidMount: function () {
-        var that = this;
-
-        Dispatcher.addActionListener(function (action) {
-            switch (action.action) {
-            case Actions.constants.FOCUS_NAME:
-                that.setNameIsActive(action.data);
-                break;
-            case Actions.constants.FOCUS_VALUE:
-                that.setValueIsActive(action.data);
-                break;
-            case Actions.constants.BLUR:
-                that.setNoneIsActive();
-                break;
-            case Actions.constants.UPDATE_PARAM:
-                that.setFocusParam(action.data);
-                break;
-            }
-        });
+    propTypes: {
+        hasFocus: React.PropTypes.object.isRequired
     },
 
     render: function () {
         var hints;
+        var hasFocus = this.props.hasFocus || {};
+        var focusType = hasFocus.type;
+        var focusData = hasFocus.data;
 
-        if (this.state.focusType === NAME) {
-            hints = this.nameHints(this.state.focusParam);
-        } else if (this.state.focusType === VALUE) {
-            hints = this.valueHints(this.state.focusParam);
+        if (focusType === PARAM_SEARCH) {
+            hints = this.paramSearchHints(focusData);
+        } else if (focusType === PARAM) {
+            hints = this.valueHints(focusData);
         } else {
             hints = this.noHints();
         }

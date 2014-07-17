@@ -1,8 +1,11 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var Param = require('./components/param.js');
-var Help = require('./components/help.js');
+var Store = require('./stores/store');
+var Dispatcher = require('./dispatcher/dispatcher');
+var Actions = require('./actions/actions');
+var Params = require('./components/params');
+var Help = require('./components/help');
 
 // components are:
 //   app
@@ -11,21 +14,33 @@ var Help = require('./components/help.js');
 //   |- help
 //   |- results
 
-// NEXT STEP: filter help by param input
+// NEXT STEP: allow addding and removing of params
 
 var App = React.createClass({
 
-    getInitialState: function () {
-        return {
-            params: []
-        };
+    componentDidMount: function () {
+        var that = this;
+
+        Dispatcher.addActionListener(function (action) {
+            switch (action.action) {
+            case Actions.constants.ADD_PARAM:
+                that.props.store.addParam(action.data);
+                break;
+            case Actions.constants.REMOVE_PARAM:
+                that.props.store.removeParam(action.data);
+                break;
+            }
+        });
     },
 
     render: function () {
+        var params = this.props.store.params;
+        var hasFocus = this.props.store.hasFocus;
+
         return (
             <div className="app">
-                <Param name="section" />
-                <Help />
+                <Params params={params} />
+                <Help hasFocus={hasFocus} />
             </div>
         );
     }
@@ -37,4 +52,14 @@ var App = React.createClass({
 
 // var Results = React.createClass();
 
-React.renderComponent(App(), document.getElementById('wacky-explorer'));
+var store = new Store();
+
+var render = function () {
+    React.renderComponent(
+        <App store={store}/>,
+        document.getElementById('wacky-explorer')
+    );
+};
+
+store.addEventListener(render);
+render();
