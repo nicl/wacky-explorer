@@ -15,10 +15,16 @@ var Help = require('./components/help.js');
 
 var App = React.createClass({
 
+    getInitialState: function () {
+        return {
+            params: []
+        };
+    },
+
     render: function () {
         return (
             <div className="app">
-                <Param />
+                <Param name="section" />
                 <Help />
             </div>
         );

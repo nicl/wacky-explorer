@@ -3,46 +3,55 @@ var Dispatcher = require('../dispatcher/dispatcher');
 var Actions = {
 
     constants: {
-        FOCUS_NAME: 'focus-name',
-        FOCUS_VALUE: 'focus-value',
+        FOCUS_PARAM: 'focus-param',
+        FOCUS_PARAM_SEARCH: 'focus-param-search',
         BLUR: 'blur',
 
-        KEY_UPSERTED: 'key-upserted',
-        KEY_REMOVED: 'key-removed'
+        ADD_PARAM: 'add-param',
+        UPDATE_PARAM: 'update-param',
+        REMOVE_PARAM: 'remove-param'
     },
 
-    focusName: function (name, value) {
+
+    focusParam: function (param) {
         Dispatcher.handleAction({
-            action: this.constants.FOCUS_NAME,
-            data: { name: name, value: value }
+            action: this.constants.FOCUS_PARAM,
+            data: param
         });
     },
 
-    focusValue: function (name, value) {
+    focusParamSearch: function () {
         Dispatcher.handleAction({
-            action: this.constants.FOCUS_VALUE,
-            data: { name: name, value: value }
+            action: this.constants.FOCUS_PARAM_SEARCH,
+            data: null,
         });
     },
 
     blur: function () {
         Dispatcher.handleAction({
             action: this.constants.BLUR,
-            data: {}
+            data: null
         });
     },
 
-    keyUpserted: function (name, value) {
+    addParam: function (param) {
         Dispatcher.handleAction({
-            action: this.constants.KEY_UPSERTED,
-            data: { name: name, value: value }
+            action: this.constants.ADD_PARAM,
+            data: param
         });
     },
 
-    keyRemoved: function(name) {
+    updateParam: function (param) {
         Dispatcher.handleAction({
-            action: this.constants.KEY_REMOVED,
-            data: { name: name, value: value }
+            action: this.constants.UPDATE_PARAM,
+            data: param
+        });
+    },
+
+    removeParam: function (param) {
+        Dispatcher.handleAction({
+            action: this.constants.REMOVE_PARAM,
+            data: param
         });
     }
 };

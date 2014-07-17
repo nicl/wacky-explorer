@@ -8,6 +8,10 @@ var VALUE = 'value';
 
 var Param = React.createClass({
 
+    propTypes: {
+        name: React.PropTypes.string.isRequired
+    },
+
     getInitialState: function () {
         return {
             name: '',
@@ -15,33 +19,31 @@ var Param = React.createClass({
         };
     },
 
-    onFocus: function (type, event) {
-        if (type === NAME) {
-            Actions.focusName(this.state.name, this.state.value);
-        } else {
-            Actions.focusValue(this.state.name, this.state.value);
-        }
+    onFocus: function () {
+        Actions.focusName(this.state.name, 'blah');
     },
 
     onBlur: function () {
         Actions.blur();
     },
 
+    onChange: function () {
+        Actions.updateParam(this.props.name, 'blah');
+    },
+
     render: function () {
         return (
             <div className="param">
-                <input
-                    className="param-key"
-                    placeholder="parameter name..."
-                    onFocus={this.onFocus.bind(this, NAME)}
-                    onBlur={this.onBlur}
+                <label>
+                    {this.props.name}
+                    <input
+                        className="param-value"
+                        placeholder="value..."
+                        onFocus={this.onFocus}
+                        onBlur={this.onBlur}
+                        onChange={this.onChange}
                 />
-                <input
-                    className="param-value"
-                    placeholder="value..."
-                    onFocus={this.onFocus.bind(this, VALUE)}
-                    onBlur={this.onBlur}
-                />
+                </label>
             </div>
         );
 

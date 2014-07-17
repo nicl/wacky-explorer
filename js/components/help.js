@@ -15,21 +15,34 @@ var Help = React.createClass({
     //   - starting help otherwise
 
     setNameIsActive: function (data) {
-        this.setState({ focusType: NAME, focusData: data });
+        this.setState({ focusType: NAME, focusParam: data });
     },
 
     setValueIsActive: function (data) {
-        this.setState({ focusType: VALUE, focusData: data });
+        this.setState({ focusType: VALUE, focusParam: data });
     },
 
     setNoneIsActive: function (data) {
-        this.setState({ focusType: null, focusData: null });
+        this.setState({ focusType: null, focusParam: null });
+    },
+
+    setFocusParam: function (data) {
+        this.setState({ focusParam: data });
     },
 
     nameHints: function (data) {
         var options = ['section', 'tag', 'show-most-viewed'];
+        var filtered;
 
-        var listItems = options.map(function(item) {
+        if (data.name === '') {
+            filtered = options;
+        } else {
+            filtered = options.filter(function (option) {
+                option.match(data.name);
+            });
+        }
+
+        var listItems = filtered.map(function(item) {
             return <li key={item} className="help-option">{item}</li>;
         });
 
@@ -49,7 +62,7 @@ var Help = React.createClass({
     getInitialState: function () {
         return {
             focusType: null,
-            focusData: null, // expected to have name and value
+            focusParam: null,
         };
     },
 
@@ -67,6 +80,9 @@ var Help = React.createClass({
             case Actions.constants.BLUR:
                 that.setNoneIsActive();
                 break;
+            case Actions.constants.UPDATE_PARAM:
+                that.setFocusParam(action.data);
+                break;
             }
         });
     },
@@ -75,9 +91,9 @@ var Help = React.createClass({
         var hints;
 
         if (this.state.focusType === NAME) {
-            hints = this.nameHints(this.state.focusData);
+            hints = this.nameHints(this.state.focusParam);
         } else if (this.state.focusType === VALUE) {
-            hints = this.valueHints(this.state.focusData);
+            hints = this.valueHints(this.state.focusParam);
         } else {
             hints = this.noHints();
         }
