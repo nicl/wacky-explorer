@@ -24,7 +24,8 @@ var App = React.createClass({
 
     propTypes: {
         store: React.PropTypes.object.isRequired,
-        parameters: React.PropTypes.array.isRequired
+        parameters: React.PropTypes.array.isRequired,
+        domain: React.PropTypes.string.isRequired,
     },
 
     componentDidMount: function () {
@@ -62,6 +63,7 @@ var App = React.createClass({
         var hasFocus = this.props.store.hasFocus;
         var paramSearch = this.props.store.paramSearch;
         var parameters = this.props.parameters;
+        var domain = this.props.domain;
 
         return (
             <div className="app">
@@ -74,6 +76,10 @@ var App = React.createClass({
                     hasFocus={hasFocus}
                     parameters={parameters}
                 />
+                <Request
+                    domain={domain}
+                    params={params}
+                />
             </div>
         );
     }
@@ -83,13 +89,37 @@ var App = React.createClass({
 
 // var Help = React.createClass();
 
-// var Results = React.createClass();
+var Request = React.createClass({
+
+    propTypes: {
+        domain: React.PropTypes.string.isRequired,
+        params: React.PropTypes.array.isRequired,
+    },
+
+    render: function () {
+        var request = this.props.domain;
+        var paramsAsPairs = this.props.params.map(function (p) {
+            return p.name + '=' + p.value;
+        });
+
+        if (paramsAsPairs.length > 0) {
+            request += '?' + paramsAsPairs.join('&');
+        }
+
+        return <div className="request">{request}</div>;
+    }
+
+});
 
 var store = new Store();
 
 var render = function () {
     React.renderComponent(
-        <App store={store} parameters={ParametersConfig}/>,
+        <App
+            store={store}
+            parameters={ParametersConfig}
+            domain='http://beta.content.guardianapis.com'
+        />,
         document.getElementById('wacky-explorer')
     );
 };

@@ -29,7 +29,7 @@ Store.prototype.addParam = function (param) {
     this.notifyAll();
 };
 
-Store.prototype.update = function (param) {
+Store.prototype.updateParam = function (param) {
     this.params = this.params.map(function (p) {
         if (p.name === param.name) return param;
         else return p;
