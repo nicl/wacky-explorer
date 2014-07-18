@@ -6,6 +6,7 @@ var Store = require('./stores/store');
 var Dispatcher = require('./dispatcher/dispatcher');
 var Actions = require('./actions/actions');
 var Params = require('./components/params');
+var Request = require('./components/request');
 var Help = require('./components/help');
 
 // components are:
@@ -88,28 +89,6 @@ var App = React.createClass({
 // var Search = React.createClass();
 
 // var Help = React.createClass();
-
-var Request = React.createClass({
-
-    propTypes: {
-        domain: React.PropTypes.string.isRequired,
-        params: React.PropTypes.array.isRequired,
-    },
-
-    render: function () {
-        var request = this.props.domain;
-        var paramsAsPairs = this.props.params.map(function (p) {
-            return p.name + '=' + p.value;
-        });
-
-        if (paramsAsPairs.length > 0) {
-            request += '?' + paramsAsPairs.join('&');
-        }
-
-        return <div className="request">{request}</div>;
-    }
-
-});
 
 var store = new Store();
 
