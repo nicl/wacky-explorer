@@ -27,7 +27,7 @@ var Results = React.createClass({
     },
 
     getInitialState: function () {
-        return { response: null };
+        return { response: {} };
     },
 
     componentDidMount: function () {

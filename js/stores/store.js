@@ -20,6 +20,9 @@ var Store = function () {
     // Input for the param add/search input (a string)
     this.paramSearch = '';
 
+    // Input for giant search bar
+    this.searchInput = '';
+
     withEventListener(this);
 };
 
@@ -67,6 +70,11 @@ Store.prototype.updateParamSearch = function (value) {
         this.hasFocus.data = value;
     }
 
+    this.notifyAll();
+};
+
+Store.prototype.updateSearchInput = function (value) {
+    this.searchInput = value;
     this.notifyAll();
 };
 

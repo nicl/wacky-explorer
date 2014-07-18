@@ -10,6 +10,7 @@ var Request = require('./components/request');
 var Results = require('./components/results');
 var Help = require('./components/help');
 var RequestBuilder = require('./utils/request-builder');
+var SearchBar = require('./components/search-bar');
 
 // components are:
 //   app
@@ -57,6 +58,9 @@ var App = React.createClass({
             case Actions.constants.UPDATE_PARAM_SEARCH:
                 that.props.store.updateParamSearch(action.data);
                 break;
+            case Actions.constants.UPDATE_SEARCH_INPUT:
+                that.props.store.updateSearchInput(action.data);
+                break;
             }
         });
     },
@@ -68,9 +72,11 @@ var App = React.createClass({
         var parameters = this.props.parameters;
         var domain = this.props.domain;
         var request = RequestBuilder.build(domain, params, 'explorer');
+        var searchInput = this.props.store.searchInput;
 
         return (
             <div className="app">
+                <SearchBar searchInput={searchInput} />
                 <Params
                     params={params}
                     parameters={parameters}

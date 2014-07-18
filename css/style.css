@@ -1,3 +1,92 @@
+a {
+    color: #0000EE;
+    cursor: pointer;
+}
+
+a:hover {
+    text-transform: underline;
+}
+
+body {
+    padding: 20px;
+}
+
 .hide {
     display: none;
+}
+
+input {
+    border: 1px solid #DFDFDF;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.params, .help, .request, .results{
+    margin-top: 20px;
+}
+
+/* Params */
+
+.params-adder {
+    margin-top: 10px;
+}
+
+.params-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li.param input {
+    margin-top: -5px;
+}
+
+li.param + li.param input {
+    margin-top: 0;
+}
+
+.param .close {
+    margin-left: 10px;
+}
+
+.param.li + li {
+    margin-top: 10px;
+}
+
+.param input {
+    font-size: 16px;
+    border: none;
+    color: #6e6e6e;
+}
+
+/* Search bar */
+
+.search-bar input {
+    height: 40px;
+    font-size: 14px;
+    padding: 0 10px;
+    width: 600px;
+}
+
+/* Param Adder */
+
+.show {
+    margin-left: 10px;
+}
+
+/* Help */
+
+.help {
+    padding: 10px;
+    background-color: #f6f6f6;
+}
+
+ul.help-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li.help-option + li {
+    margin-top: 5px;
 }
