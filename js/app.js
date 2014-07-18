@@ -7,7 +7,9 @@ var Dispatcher = require('./dispatcher/dispatcher');
 var Actions = require('./actions/actions');
 var Params = require('./components/params');
 var Request = require('./components/request');
+var Results = require('./components/results');
 var Help = require('./components/help');
+var RequestBuilder = require('./utils/request-builder');
 
 // components are:
 //   app
@@ -65,6 +67,7 @@ var App = React.createClass({
         var paramSearch = this.props.store.paramSearch;
         var parameters = this.props.parameters;
         var domain = this.props.domain;
+        var request = RequestBuilder.build(domain, params, 'explorer');
 
         return (
             <div className="app">
@@ -77,10 +80,8 @@ var App = React.createClass({
                     hasFocus={hasFocus}
                     parameters={parameters}
                 />
-                <Request
-                    domain={domain}
-                    params={params}
-                />
+                <Request request={request} />
+                <Results request={request} />
             </div>
         );
     }
