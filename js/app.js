@@ -71,8 +71,8 @@ var App = React.createClass({
         var paramSearch = this.props.store.paramSearch;
         var parameters = this.props.parameters;
         var domain = this.props.domain;
-        var request = RequestBuilder.build(domain, params, 'explorer');
         var searchInput = this.props.store.searchInput;
+        var request = RequestBuilder.build(domain, params, searchInput, 'explorer');
 
         return (
             <div className="app">
