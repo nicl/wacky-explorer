@@ -6,15 +6,15 @@ var RequestBuilder = {
             return p.value; // not empty
         });
 
-        var paramsAsPairs = stripped.map(function (p) {
-            return p.name + '=' + p.value;
-        });
-
         if (searchInput) {
-            paramsAsPairs.push('q=' + searchInput);
+            stripped.push({name: 'q', value: searchInput});
         }
 
-        paramsAsPairs.push('api-key=' + apiKey);
+        stripped.push({name: 'api-key', value: apiKey});
+
+        var paramsAsPairs = stripped.map(function (p) {
+            return p.name + '=' + encodeURIComponent(p.value);
+        });
 
         if (paramsAsPairs.length > 0) {
             request += '/search?' + paramsAsPairs.join('&');
