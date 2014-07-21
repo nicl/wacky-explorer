@@ -37,7 +37,12 @@ var Help = React.createClass({
             return p.name === data.name;
         });
 
-        return paramData[0].description;
+        return (
+            <div>
+                <h3>{paramData[0].teaser}</h3>
+                <div dangerouslySetInnerHTML={{__html: paramData[0].description}} />
+            </div>
+        );
     },
 
     noHints: function () {

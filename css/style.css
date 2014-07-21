@@ -81,6 +81,10 @@ li.param + li.param input {
     background-color: #f6f6f6;
 }
 
+.help h3 {
+    margin-top: 0;
+}
+
 ul.help-options {
     list-style: none;
     padding: 0;
