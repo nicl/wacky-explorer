@@ -12,14 +12,7 @@ var Help = require('./components/help');
 var RequestBuilder = require('./utils/request-builder');
 var SearchBar = require('./components/search-bar');
 
-// components are:
-//   app
-//   |- search
-//      |- param(s)
-//   |- help
-//   |- results
-
-// NEXT STEP: show help
+// NEXT STEP: allow enter press on params adder
 
 var PARAM = 'param';
 var PARAM_SEARCH = 'param-search';
@@ -85,6 +78,7 @@ var App = React.createClass({
                 <Help
                     hasFocus={hasFocus}
                     parameters={parameters}
+                    params={params}
                 />
                 <Request request={request} />
                 <Results request={request} />

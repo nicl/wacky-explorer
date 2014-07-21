@@ -45,20 +45,33 @@ var Help = React.createClass({
         return null;
     },
 
+    filterParams: function (parameters, activeParams) {
+        var existingNames = activeParams.map(function (p) {
+            return p.name;
+        });
+
+        return parameters.filter(function (p) {
+            return existingNames.indexOf(p.name) === -1;
+        });
+    },
+
     propTypes: {
         hasFocus: React.PropTypes.object,
-        parameters: React.PropTypes.array.isRequired
+        parameters: React.PropTypes.array.isRequired,
+        params: React.PropTypes.array.isRequired
     },
 
     render: function () {
         var hints;
         var parameters = this.props.parameters;
+        var activeParams = this.props.params;
         var hasFocus = this.props.hasFocus || {};
         var focusType = hasFocus.type;
         var focusData = hasFocus.data;
+        var filteredParams = this.filterParams(parameters, activeParams);
 
         if (focusType === PARAM_SEARCH) {
-            hints = this.paramSearchHints(parameters, focusData);
+            hints = this.paramSearchHints(filteredParams, focusData);
         } else if (focusType === PARAM) {
             hints = this.valueHints(parameters, focusData);
         } else {

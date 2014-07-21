@@ -5,6 +5,7 @@ var Actions = require('../actions/actions');
 
 var NAME = 'name';
 var VALUE = 'value';
+var ENTER = 13;
 
 var Param = React.createClass({
 
@@ -69,6 +70,18 @@ var ParamsAdder = React.createClass({
         Actions.blur(this.props.param);
     },
 
+    onKeyDown: function (event) {
+        var name = this.refs.addInput.getDOMNode().value;
+
+        switch (event.keyCode) {
+        case ENTER:
+            Actions.addParam({ name: name, value: ''});
+            break;
+        default:
+            break;
+        }
+    },
+
     render: function () {
         var that = this;
         var inputValid = this.props.parameters.some(function (p) {
@@ -84,6 +97,7 @@ var ParamsAdder = React.createClass({
                     onFocus={this.onFocus}
                     value={this.props.paramSearch}
                     placeholder='Add params...'
+                    onKeyDown={this.onKeyDown}
                 />
                 <a
                     onClick={this.addParam}
