@@ -15,7 +15,7 @@ var Help = React.createClass({
 
     paramSearchHints: function (parameters, data) {
         var options = parameters;
-        var filtered;
+        var filtered, ordered;
 
         if (data === '') {
             filtered = options;
@@ -25,11 +25,20 @@ var Help = React.createClass({
             });
         }
 
-        var listItems = filtered.map(function(p) {
+        ordered = filtered.sort(function (a, b) {
+            return a.name > b.name ? 1 : -1;
+        });
+
+        var listItems = ordered.map(function(p) {
             return <li key={p.name} className="help-option">{p.name}</li>;
         });
 
-        return <ul className="help-options">{listItems}</ul>;
+        return (
+            <div>
+                <h3>Available filters</h3>
+                <ul className="help-options">{listItems}</ul>
+            </div>
+        );
     },
 
     valueHints: function (parameters, data) {
@@ -43,6 +52,17 @@ var Help = React.createClass({
                 <div dangerouslySetInnerHTML={{__html: paramData[0].description}} />
             </div>
         );
+    },
+
+    welcomeHints: function (help) {
+        return (
+            <div>
+                <h3>{help.title}</h3>
+                <div dangerouslySetInnerHTML={{__html: help.description}} />
+            </div>
+        );
+
+        return
     },
 
     noHints: function () {
@@ -63,7 +83,12 @@ var Help = React.createClass({
     propTypes: {
         hasFocus: React.PropTypes.object,
         parameters: React.PropTypes.array.isRequired,
+        help: React.PropTypes.object.isRequired,
         params: React.PropTypes.array.isRequired
+    },
+
+    getInitialState: function () {
+        return { showWelcomeMessage: true };
     },
 
     render: function () {
@@ -74,13 +99,17 @@ var Help = React.createClass({
         var focusType = hasFocus.type;
         var focusData = hasFocus.data;
         var filteredParams = this.filterParams(parameters, activeParams);
+        var help = this.props.help;
 
         if (focusType === PARAM_SEARCH) {
             hints = this.paramSearchHints(filteredParams, focusData);
         } else if (focusType === PARAM) {
             hints = this.valueHints(parameters, focusData);
         } else {
-            hints = this.noHints();
+//            hints = this.state.showWelcomeMessage ?
+//                this.welcomeHints(help) : this.noHints();
+
+            this.noHints();
         }
 
         return <div className="help">{hints}</div>;

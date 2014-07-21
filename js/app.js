@@ -2,6 +2,7 @@
 
 var React = require('react');
 var ParametersConfig = require('./config/parameters');
+var HelpConfig = require('./config/help');
 var Store = require('./stores/store');
 var Dispatcher = require('./dispatcher/dispatcher');
 var Actions = require('./actions/actions');
@@ -22,6 +23,7 @@ var App = React.createClass({
     propTypes: {
         store: React.PropTypes.object.isRequired,
         parameters: React.PropTypes.array.isRequired,
+        help: React.PropTypes.object.isRequired,
         domain: React.PropTypes.string.isRequired,
     },
 
@@ -63,6 +65,7 @@ var App = React.createClass({
         var hasFocus = this.props.store.hasFocus;
         var paramSearch = this.props.store.paramSearch;
         var parameters = this.props.parameters;
+        var help = this.props.help;
         var domain = this.props.domain;
         var searchInput = this.props.store.searchInput;
         var request = RequestBuilder.build(domain, params, searchInput, 'explorer');
@@ -79,6 +82,7 @@ var App = React.createClass({
                     hasFocus={hasFocus}
                     parameters={parameters}
                     params={params}
+                    help={help}
                 />
                 <Request request={request} />
                 <Results request={request} />
@@ -98,6 +102,7 @@ var render = function () {
         <App
             store={store}
             parameters={ParametersConfig}
+            help={HelpConfig}
             domain='http://beta.content.guardianapis.com'
         />,
         document.getElementById('wacky-explorer')

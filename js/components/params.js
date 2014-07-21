@@ -43,7 +43,7 @@ var Param = React.createClass({
                         onChange={this.onChange}
                 />
                 </label>
-                <a className='close' onClick={this.remove}>Close</a>
+                <a className='close' onClick={this.remove}>Remove</a>
             </div>
         );
 
@@ -97,7 +97,7 @@ var ParamsAdder = React.createClass({
                     onBlur={this.onBlur}
                     onFocus={this.onFocus}
                     value={this.props.paramSearch}
-                    placeholder='Add params...'
+                    placeholder='Add filters...'
                     onKeyDown={this.onKeyDown}
                 />
                 <a

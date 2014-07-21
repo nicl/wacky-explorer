@@ -9,7 +9,15 @@ var Request = React.createClass({
     },
 
     render: function () {
-        return <div className="request">{this.props.request}</div>;
+        return (
+            <div className="request">
+                <a
+                    href={this.props.request}
+                    target='_blank'
+                    children={this.props.request}
+                />
+            </div>
+        );
     }
 
 });
