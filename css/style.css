@@ -4,7 +4,7 @@ a {
 }
 
 a:hover {
-    text-transform: underline;
+    text-decoration: underline;
 }
 
 body {
