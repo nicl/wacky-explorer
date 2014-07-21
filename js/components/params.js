@@ -76,6 +76,7 @@ var ParamsAdder = React.createClass({
         switch (event.keyCode) {
         case ENTER:
             Actions.addParam({ name: name, value: ''});
+            Actions.focusParamSearch(''); // to ensure help is refreshed
             break;
         default:
             break;
