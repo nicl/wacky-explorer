@@ -11,33 +11,26 @@ var SearchBar = React.createClass({
     },
 
     propTypes: {
-        searchInput: React.PropTypes.string.isRequired
+        searchInput: React.PropTypes.string.isRequired,
+        endpoints: React.PropTypes.array.isRequired,
+        activeEndpoint: React.PropTypes.object.isRequired
     },
 
-    changeEndpoint: function (endpoint) {},
+    changeEndpoint: function (endpoint) {
+        Actions.updateEndpoint(endpoint);
+    },
 
     render: function () {
-        var options = [
-            {
-                key: 'content',
-                text: 'Search content'
-            },
-            {
-                key: 'item',
-                text: 'Path lookup'
-            }
-        ];
-
         return (
             <div className="search-bar">
                 <input
                     onChange={this.onChange}
                     value={this.props.searchInput}
-                    placeholder='Search content...'
+                    placeholder={this.props.activeEndpoint.hint}
                 />
                 <Dropdown
-                    active={{key: 'content', text: 'Search content'}}
-                    options={options}
+                    active={this.props.activeEndpoint}
+                    options={this.props.endpoints}
                     onClick={this.changeEndpoint}
                 />
             </div>

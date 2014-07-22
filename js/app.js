@@ -3,6 +3,7 @@
 var React = require('react');
 var ParametersConfig = require('./config/parameters');
 var HelpConfig = require('./config/help');
+var EndpointConfig = require('./config/endpoints');
 var Store = require('./stores/store');
 var Dispatcher = require('./dispatcher/dispatcher');
 var Actions = require('./actions/actions');
@@ -25,6 +26,7 @@ var App = React.createClass({
         parameters: React.PropTypes.array.isRequired,
         help: React.PropTypes.object.isRequired,
         domain: React.PropTypes.string.isRequired,
+        endpoints: React.PropTypes.array.isRequired,
     },
 
     componentDidMount: function () {
@@ -56,6 +58,9 @@ var App = React.createClass({
             case Actions.constants.UPDATE_SEARCH_INPUT:
                 that.props.store.updateSearchInput(action.data);
                 break;
+            case Actions.constants.UPDATE_ENDPOINT:
+                that.props.store.updateEndpoint(action.data);
+                break;
             }
         });
     },
@@ -68,11 +73,17 @@ var App = React.createClass({
         var help = this.props.help;
         var domain = this.props.domain;
         var searchInput = this.props.store.searchInput;
-        var request = RequestBuilder.build(domain, params, searchInput, 'explorer');
+        var endpoints = this.props.endpoints;
+        var activeEndpoint = this.props.store.activeEndpoint || endpoints[0];
+        var request = RequestBuilder.build(domain, params, searchInput, 'explorer', activeEndpoint);
 
         return (
             <div className="app">
-                <SearchBar searchInput={searchInput} />
+                <SearchBar
+                    searchInput={searchInput}
+                    endpoints={endpoints}
+                    activeEndpoint={activeEndpoint}
+                />
                 <Params
                     params={params}
                     parameters={parameters}
@@ -104,6 +115,7 @@ var render = function () {
             parameters={ParametersConfig}
             help={HelpConfig}
             domain='http://beta.content.guardianapis.com'
+            endpoints={EndpointConfig}
         />,
         document.getElementById('wacky-explorer')
     );

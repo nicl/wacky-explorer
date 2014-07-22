@@ -23,6 +23,11 @@ var Store = function () {
     // Input for giant search bar
     this.searchInput = '';
 
+    // Active endpoint:
+    //
+    // { key: 'content', text: 'Search content' }
+    this.activeEndpoint = null;
+
     withEventListener(this);
 };
 
@@ -75,6 +80,11 @@ Store.prototype.updateParamSearch = function (value) {
 
 Store.prototype.updateSearchInput = function (value) {
     this.searchInput = value;
+    this.notifyAll();
+};
+
+Store.prototype.updateEndpoint = function (value) {
+    this.activeEndpoint = value;
     this.notifyAll();
 };
 

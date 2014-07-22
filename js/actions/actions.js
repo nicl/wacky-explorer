@@ -13,7 +13,9 @@ var Actions = {
 
         UPDATE_PARAM_SEARCH: 'update-param-search',
 
-        UPDATE_SEARCH_INPUT: 'update-search-input'
+        UPDATE_SEARCH_INPUT: 'update-search-input',
+
+        UPDATE_ENDPOINT: 'update-endpoint'
     },
 
 
@@ -69,6 +71,13 @@ var Actions = {
     updateSearchInput: function (value) {
         Dispatcher.handleAction({
             action: this.constants.UPDATE_SEARCH_INPUT,
+            data: value
+        });
+    },
+
+    updateEndpoint: function (value) {
+        Dispatcher.handleAction({
+            action: this.constants.UPDATE_ENDPOINT,
             data: value
         });
     }

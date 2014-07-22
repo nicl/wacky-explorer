@@ -1,12 +1,12 @@
 var RequestBuilder = {
 
-    build: function (domain, params, searchInput, apiKey) {
+    build: function (domain, params, searchInput, apiKey, endpoint) {
         var request = domain;
         var stripped = params.filter(function (p) {
             return p.value; // not empty
         });
 
-        if (searchInput) {
+        if (searchInput && endpoint.key === 'content') {
             stripped.push({name: 'q', value: searchInput});
         }
 
@@ -17,7 +17,12 @@ var RequestBuilder = {
         });
 
         if (paramsAsPairs.length > 0) {
-            request += '/search?' + paramsAsPairs.join('&');
+            if (endpoint.key === 'content') {
+                request += '/search?' + paramsAsPairs.join('&');
+            } else {
+                request += '/' + searchInput + '?' + paramsAsPairs.join('&');
+            }
+
         }
 
         return request;

@@ -4,16 +4,16 @@ var React = require('react');
 
 var Dropdown = React.createClass({
 
-    getInitialState: function() {
-        return { displayMenu: false };
+    getInitialState: function () {
+        return { displayDropdownMenu: false };
     },
 
-    toggleMenuDisplay: function() {
-        this.setState({ displayMenu: ! this.state.displayMenu });
+    toggleMenuDisplay: function () {
+        this.setState({ displayDropdownMenu: ! this.state.displayDropdownMenu });
     },
 
     propTypes: {
-        active: React.PropTypes.string.isRequired,
+        active: React.PropTypes.object.isRequired,
         onClick: React.PropTypes.func.isRequired,
 
         // an option is like: { key: 'some-id', text: 'Some text' }
@@ -26,13 +26,13 @@ var Dropdown = React.createClass({
         var that = this;
         var caret = <span className='caret' />;
 
-        classes.push(this.state.displayDropdown ? 'open' : 'closed');
+        classes.push(this.state.displayDropdownMenu ? 'open' : 'closed');
 
         dropdownOptions = this.props.options.map(function (option) {
             return (
-                <li>
+                <li key={option.key}>
                     <a
-                        onClick={that.props.onClick.bind(null, option.key)}
+                        onClick={that.props.onClick.bind(null, option)}
                         children={option.text}
                     />
                 </li>
@@ -41,8 +41,9 @@ var Dropdown = React.createClass({
 
         return (
             <div className={classes.join(' ')} >
-                <button className='dropdown-toggle'>
+                <button className='dropdown-toggle' onClick={this.toggleMenuDisplay}>
                     {this.props.active.text}
+                    {caret}
                 </button>
                 <ul className='dropdown-menu'>
                     {dropdownOptions}
