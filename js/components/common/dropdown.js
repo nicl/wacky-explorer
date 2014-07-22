@@ -12,6 +12,11 @@ var Dropdown = React.createClass({
         this.setState({ displayDropdownMenu: ! this.state.displayDropdownMenu });
     },
 
+    selectOption: function (option) {
+        this.toggleMenuDisplay();
+        this.props.onClick(option);
+    },
+
     propTypes: {
         active: React.PropTypes.object.isRequired,
         onClick: React.PropTypes.func.isRequired,
@@ -32,7 +37,7 @@ var Dropdown = React.createClass({
             return (
                 <li key={option.key}>
                     <a
-                        onClick={that.props.onClick.bind(null, option)}
+                        onClick={that.selectOption.bind(null, option)}
                         children={option.text}
                     />
                 </li>

@@ -49,13 +49,17 @@ li.param + li.param input {
     margin-left: 10px;
 }
 
-.param.li + li {
+li.param + li {
     margin-top: 10px;
+}
+
+.param span {
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .param input {
     font-size: 16px;
-    border: none;
     color: #6e6e6e;
 }
 
@@ -93,6 +97,18 @@ ul.help-options {
 
 li.help-option + li {
     margin-top: 5px;
+}
+
+.help h4 {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+
+.help p.param-teaser {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
 }
 
 /* Dropdown */
@@ -154,4 +170,67 @@ li.help-option + li {
 .dropdown-menu a:hover {
     background-color: #F6F6F6;
     text-decoration: none;
+}
+
+/* Datepicker */
+
+.ui-datepicker {
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #dfdfdf;
+    color: #6E6E6E;
+}
+
+.ui-datepicker thead {
+    font-size: 10px;
+}
+
+.ui-datepicker-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.ui-datepicker-prev {
+    position: absolute;
+    left: 10px;
+}
+
+.ui-datepicker-next {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+}
+
+.ui-datepicker-prev {
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid #6e6e6e;
+    vertical-align: middle;
+    text-indent: 9999px;
+    width: 0px;
+    height: 0px;
+    width: 0px;
+}
+
+.ui-datepicker-next {
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid #6e6e6e;
+    vertical-align: middle;
+    text-indent: 9999px;
+    height: 0px;
+    width: 0px;
+}
+
+a.ui-state-default {
+    text-decoration: none;
+    color: #6E6E6E;
+    padding: 8px;
+    display: block;
+    text-align: center;
+}
+
+a.ui-state-default:hover {
+    text-decoration: none;
+    background-color: #f6f6f6;
 }

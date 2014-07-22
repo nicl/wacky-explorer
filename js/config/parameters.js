@@ -15,13 +15,15 @@ var parameters = [
     {
         name: 'from-date',
         teaser: 'Return content on or after a given date',
-        description: '<p>Dates should be of the form: YYYY-MM-DD, e.g. e.g. 2014-02-16.</p>'
+        description: '<p>Dates should be of the form: YYYY-MM-DD, e.g. e.g. 2014-02-16.</p>',
+        type: 'datetime'
     },
 
     {
         name: 'to-date',
         teaser: 'Return content before on on a given date',
-        description: '<p>Dates should be of the form: YYYY-MM-DD, e.g. e.g. 2014-02-16.</p>'
+        description: '<p>Dates should be of the form: YYYY-MM-DD, e.g. e.g. 2014-02-16.</p>',
+        type: 'datetime'
     },
 
     {

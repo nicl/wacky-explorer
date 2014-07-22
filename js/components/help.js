@@ -30,7 +30,12 @@ var Help = React.createClass({
         });
 
         var listItems = ordered.map(function(p) {
-            return <li key={p.name} className="help-option">{p.name}</li>;
+            return (
+                <li key={p.name} className="help-option">
+                    <h4 className='param-name'>{p.name}</h4>
+                    <p className='param-teaser'>{p.teaser}</p>
+                </li>
+            );
         });
 
         return (

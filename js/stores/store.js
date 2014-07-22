@@ -43,7 +43,7 @@ Store.prototype.updateParam = function (param) {
         else return p;
     });
 
-    if (this.hasFocus.type === PARAM) {
+    if (this.hasFocus && this.hasFocus.type === PARAM) {
         this.hasFocus.data = param;
     }
 
