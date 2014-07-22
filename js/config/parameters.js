@@ -21,7 +21,7 @@ var parameters = [
 
     {
         name: 'to-date',
-        teaser: 'Return content before on on a given date',
+        teaser: 'Return content before or on a given date',
         description: '<p>Dates should be of the form: YYYY-MM-DD, e.g. e.g. 2014-02-16.</p>',
         type: 'datetime'
     },
@@ -34,8 +34,8 @@ var parameters = [
 
     {
         name: 'show-tags',
-        teaser: 'Return content with tags included',
-        description: '<p>Tags are a form of meta-data used to categorise content.</p><p>You can filter by multiple tags; simply separate tags by a comma (\',\') to provide multiple values.</p><p>\'all\' can be used to show all tags.</p>'
+        teaser: 'Return content with specified tag types included',
+        description: '<p>Tags are a form of meta-data used to categorise content. They have a type. For example, \'keyword\' is the type for general topics, whereas a \'contributor\' type tag is very specific in purpose - it denotes an author of the piece.</p><p>You can filter by multiple tags; simply separate tags by a comma (\',\') to provide multiple values.</p><p>\'all\' can be used to show all tags.</p>'
     }
 ];
 

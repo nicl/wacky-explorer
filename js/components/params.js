@@ -5,6 +5,9 @@ var Actions = require('../actions/actions');
 var $ = require('jquery');
 require('jquery-ui/datepicker');
 
+window.jQuery = $; // hack to make typeahead work
+require('typeahead.js');
+
 var NAME = 'name';
 var VALUE = 'value';
 var ENTER = 13;
@@ -85,17 +88,18 @@ var ParamsAdder = React.createClass({
         Actions.addParam({ name: name, value: '' });
     },
 
-    onChange: function (event) {
-        Actions.updateParamSearch(event.target.value);
+    selectParam: function () {
+        var node = this.refs.addInput.getDOMNode();
+        this.addParam();
+        $(node).typeahead('val', '');
     },
 
-    onFocus: function () {
-        var value = this.refs.addInput.getDOMNode().value;
-        Actions.focusParamSearch(value);
-    },
+    isValidName: function (name) {
+        var matches = this.props.parameters.filter(function (p) {
+            return p.name === name;
+        });
 
-    onBlur: function () {
-        Actions.blur(this.props.param);
+        return matches.length > 0;
     },
 
     onKeyDown: function (event) {
@@ -103,12 +107,65 @@ var ParamsAdder = React.createClass({
 
         switch (event.keyCode) {
         case ENTER:
-            Actions.addParam({ name: name, value: ''});
-            Actions.focusParamSearch(''); // to ensure help is refreshed
+            if (this.isValidName(name)) {
+                this.selectParam();
+            }
             break;
         default:
             break;
         }
+    },
+
+    matcher: function (q, cb) {
+        var matches = this.props.parameters.filter(function (p) {
+            return p.name.match(q);
+        });
+
+        cb(matches);
+    },
+
+    componentDidMount: function () {
+        var that = this;
+        var node = this.refs.addInput.getDOMNode();
+
+        $(node).typeahead(
+            {
+                hint: true,
+                highlight: true,
+                minLength: 0
+            },
+            {
+                name: 'parameters',
+                displayKey: 'name',
+                source: this.matcher,
+                templates: {
+                    empty: [
+                        '<div class="empty-message">',
+                        'Unable to find any matching filters.',
+                        '</div>'
+                    ].join('\n'),
+                    suggestion: function (obj) {
+                        return '<p class="name">' +
+                            obj.name +
+                            '</p><p class="teaser">' +
+                            obj.teaser +
+                            '</p>';
+                    }
+                }
+            }
+        ).on('typeahead:selected', function($e, datum) {
+            that.selectParam(this);
+        }).on('typeahead:autocompleted', function($e, datum) {
+            that.selectParam(this);
+        })
+
+        // hack to show suggestions when user focus the typeahead input
+        $(node).on( 'focus', function() {
+            $(this).typeahead( 'val', 'a' );
+            $(this).typeahead( 'open');
+            $(this).typeahead( 'val', '' );
+        });
+
     },
 
     render: function () {
@@ -121,12 +178,12 @@ var ParamsAdder = React.createClass({
             <div className="params-adder">
                 <input
                     ref="addInput"
-                    onChange={this.onChange}
-                    onBlur={this.onBlur}
-                    onFocus={this.onFocus}
-                    value={this.props.paramSearch}
-                    placeholder='Add filters...'
+                    // onChange={this.onChange}
+                    // onBlur={this.onBlur}
+                    // onFocus={this.onFocus}
+//                    value={this.props.paramSearch}
                     onKeyDown={this.onKeyDown}
+//                    placeholder='Add params'
                 />
                 <a
                     onClick={this.addParam}
