@@ -7,8 +7,14 @@ a:hover {
     text-decoration: underline;
 }
 
+p {
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
 body {
     padding: 20px;
+    color: #333;
 }
 
 .hide {
@@ -20,8 +26,15 @@ input {
     padding: 5px 10px;
 }
 
-.params, .help, .request, .results{
+.params, .help, .request, .results, .divider {
     margin-top: 20px;
+}
+
+/* Divider */
+
+.divider {
+    height: 20px;
+    background-color: #f6f6f6;
 }
 
 /* Params */
@@ -36,24 +49,36 @@ input {
     padding: 0;
 }
 
+.param label {
+    line-height: 30px;
+}
+
 li.param input {
     margin-top: -5px;
 }
 
 li.param + li.param input {
     margin-top: 0;
+    display: inline-block;
+}
+
+.param .name {
+    margin-right: 10px;
+}
+
+.param label {
+    margin-right: 10px;
 }
 
 .param .close {
-    margin-left: 10px;
+    margin-left: 0;
 }
 
 li.param + li {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
-.param span {
-    display: inline-block;
+.param .glyphicon {
     margin-right: 10px;
 }
 
@@ -71,10 +96,6 @@ li.param + li {
 }
 
 /* Param Adder */
-
-.show {
-    margin-left: 10px;
-}
 
 /* Help */
 
@@ -305,6 +326,10 @@ a.ui-state-default:hover {
     font-weight: normal;
 }
 
+.tt-dropdown-menu .empty-message {
+    padding: 0 10px;
+}
+
 /* Glyphicons */
 
 .glyphicon {
@@ -314,4 +339,25 @@ a.ui-state-default:hover {
 
 .glyphicon:hover {
     color: grey;
+}
+
+/* Help box */
+
+.help-box {
+    position: relative;
+    margin-top: 10px;
+}
+
+.help-box .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.close .glyphicon {
+    margin: 0;
+}
+
+.help-box h3 {
+    font-size: 16px;
 }

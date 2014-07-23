@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Actions = require('../actions/actions');
+var HelpBox = require('../components/common/help-box');
 var $ = require('jquery');
 require('jquery-ui/datepicker');
 
@@ -49,6 +50,14 @@ var Param = React.createClass({
         });
     },
 
+    toggleHelpDisplay: function () {
+        this.setState({showHelp: !this.state.showHelp});
+    },
+
+    getInitialState: function () {
+        return { showHelp: false };
+    },
+
     componentDidMount: function () {
         switch (this.props.paramInfo.type) {
         case 'datetime':
@@ -60,10 +69,17 @@ var Param = React.createClass({
     },
 
     render: function () {
+        var helpContent = (
+            <div>
+                <h3>{this.props.paramInfo.teaser}</h3>
+                <div dangerouslySetInnerHTML={{__html: this.props.paramInfo.description}} />
+            </div>
+        );
+
         return (
             <div className="param">
                 <label>
-                    {this.props.param.name}
+                    <span className='name'>{this.props.param.name}</span>
                     <input
                         ref='input'
                         id='datepicker'
@@ -75,9 +91,17 @@ var Param = React.createClass({
                         type={this.props.paramInfo.type || 'text' }
                 />
                 </label>
-                <a className='close' onClick={this.remove}>
+                <a className='param-help-button' onClick={this.toggleHelpDisplay}>
+                    <span className="glyphicon glyphicon-info-sign"></span>
+                </a>
+                <a className='param-close-button' onClick={this.remove}>
                     <span className="glyphicon glyphicon-remove"></span>
                 </a>
+                <HelpBox
+                    content={helpContent}
+                    onRemove={this.toggleHelpDisplay}
+                    isVisible={this.state.showHelp}
+                />
             </div>
         );
 

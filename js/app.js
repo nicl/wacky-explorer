@@ -85,12 +85,7 @@ var App = React.createClass({
                     parameters={parameters}
                     endpoint={activeEndpoint}
                 />
-                <Help
-                    hasFocus={hasFocus}
-                    parameters={parameters}
-                    params={params}
-                    help={help}
-                />
+                <div className='divider'></div>
                 <Request request={request} />
                 <Results request={request} />
             </div>
