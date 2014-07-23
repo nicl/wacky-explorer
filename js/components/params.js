@@ -94,6 +94,16 @@ var ParamsAdder = React.createClass({
         $(node).typeahead('val', '');
     },
 
+    onFocus: function () {
+        var node = this.refs.addInput.getDOMNode();
+        $(node).attr('placeholder','');
+    },
+
+    onBlur: function () {
+        var node = this.refs.addInput.getDOMNode();
+        $(node).attr('placeholder','Add params...');
+    },
+
     isValidName: function (name) {
         var matches = this.props.parameters.filter(function (p) {
             return p.name === name;
@@ -179,11 +189,11 @@ var ParamsAdder = React.createClass({
                 <input
                     ref="addInput"
                     // onChange={this.onChange}
-                    // onBlur={this.onBlur}
-                    // onFocus={this.onFocus}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
 //                    value={this.props.paramSearch}
                     onKeyDown={this.onKeyDown}
-//                    placeholder='Add params'
+                    placeholder='Add params'
                 />
                 <a
                     onClick={this.addParam}
