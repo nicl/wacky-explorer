@@ -8,6 +8,8 @@ require('jquery-ui/datepicker');
 window.jQuery = $; // hack to make typeahead work
 require('typeahead.js');
 
+var _ = require('underscore');
+
 var NAME = 'name';
 var VALUE = 'value';
 var ENTER = 13;
@@ -91,7 +93,9 @@ var ParamsAdder = React.createClass({
     selectParam: function () {
         var node = this.refs.addInput.getDOMNode();
         this.addParam();
-        $(node).typeahead('val', '');
+        $(node).typeahead( 'val', 'a' );
+        $(node).typeahead( 'open');
+        $(node).typeahead( 'val', '' );
     },
 
     onFocus: function () {
@@ -105,11 +109,11 @@ var ParamsAdder = React.createClass({
     },
 
     isValidName: function (name) {
-        var matches = this.props.parameters.filter(function (p) {
+        var isValid = _.find(this.props.parameters, function (p) {
             return p.name === name;
         });
 
-        return matches.length > 0;
+        return isValid;
     },
 
     onKeyDown: function (event) {
@@ -127,14 +131,37 @@ var ParamsAdder = React.createClass({
     },
 
     matcher: function (q, cb) {
-        var matches = this.props.parameters.filter(function (p) {
+        var parameters = this.getParameterSet(this.props.parameters,
+                                              this.props.params,
+                                              this.props.endpoint);
+
+        var matches = parameters.filter(function (p) {
             return p.name.match(q);
         });
 
         cb(matches);
     },
 
-    componentDidMount: function () {
+    getParameterSet: function (parameters, params, endpoint) {
+        var filtered = parameters.filter(function (p) {
+            var endpointMatch = _.contains(p.endpoints, endpoint.key);
+            var usedAlready = _.find(params, function (param) {
+                return param.name === p.name;
+            });
+
+            return endpointMatch && !usedAlready;
+        });
+
+        return filtered;
+    },
+
+    propTypes: {
+        params: React.PropTypes.array.isRequired,
+        parameters: React.PropTypes.array.isRequired,
+        endpoint: React.PropTypes.object.isRequired
+    },
+
+    addTypeAhead: function () {
         var that = this;
         var node = this.refs.addInput.getDOMNode();
 
@@ -170,37 +197,29 @@ var ParamsAdder = React.createClass({
         })
 
         // hack to show suggestions when user focus the typeahead input
-        $(node).on( 'focus', function() {
+        $(node).on( 'focus', function () {
             $(this).typeahead( 'val', 'a' );
             $(this).typeahead( 'open');
             $(this).typeahead( 'val', '' );
         });
+    },
 
+    componentDidMount: function () {
+        this.addTypeAhead();
     },
 
     render: function () {
         var that = this;
-        var inputValid = this.props.parameters.some(function (p) {
-            return that.props.paramSearch === p.name;
-        });
 
         return (
             <div className="params-adder">
                 <input
                     ref="addInput"
-                    // onChange={this.onChange}
                     onBlur={this.onBlur}
                     onFocus={this.onFocus}
-//                    value={this.props.paramSearch}
                     onKeyDown={this.onKeyDown}
-                    placeholder='Add params'
+                    placeholder='Add params...'
                 />
-                <a
-                    onClick={this.addParam}
-                    className={inputValid ? 'show' : 'hide'}
-                >
-                    Add
-                </a>
             </div>
         );
     }
@@ -219,13 +238,13 @@ var Params = React.createClass({
         var parameters = this.props.parameters;
 
         var listItems = this.props.params.map(function(p) {
-            paramInfo = parameters.filter(function (pi) {
+            paramInfo = _.find(parameters, function (pi) {
                 return pi.name === p.name;
             });
 
             return (
                 <li key={p.name} className="param">
-                    <Param param={p} paramInfo={paramInfo[0]} />
+                    <Param param={p} paramInfo={paramInfo} />
                 </li>
             );
         });
@@ -234,7 +253,8 @@ var Params = React.createClass({
             <div className="params">
                 <ul className="params-list">{listItems}</ul>
                 <ParamsAdder
-                    paramSearch={this.props.paramSearch}
+                    endpoint={this.props.endpoint}
+                    params={this.props.params}
                     parameters={this.props.parameters}
                 />
             </div>

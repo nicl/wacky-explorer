@@ -88,6 +88,7 @@ var App = React.createClass({
                     params={params}
                     parameters={parameters}
                     paramSearch={paramSearch}
+                    endpoint={activeEndpoint}
                 />
                 <Help
                     hasFocus={hasFocus}
