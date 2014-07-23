@@ -3,13 +3,14 @@
 var React = require('react');
 var Actions = require('../actions/actions');
 var HelpBox = require('../components/common/help-box');
+var ParamHelp = require('../components/param-help');
 var $ = require('jquery');
+var _ = require('underscore');
+var Modernizr = require('browsernizr');
+require('browsernizr/test/inputtypes');
 require('jquery-ui/datepicker');
-
 window.jQuery = $; // hack to make typeahead work
 require('typeahead.js');
-
-var _ = require('underscore');
 
 var NAME = 'name';
 var VALUE = 'value';
@@ -43,11 +44,13 @@ var Param = React.createClass({
     },
 
     addDateTimePicker: function () {
-        var node = this.refs.input.getDOMNode();
-        $(node).datepicker({
-            dateFormat: 'yy-mm-dd',
-            onSelect: this.onDatePickerChange
-        });
+        if (!Modernizr.date) {
+            var node = this.refs.input.getDOMNode();
+            $(node).datepicker({
+                dateFormat: 'yy-mm-dd',
+                onSelect: this.onDatePickerChange
+            });
+        }
     },
 
     toggleHelpDisplay: function () {
@@ -60,7 +63,7 @@ var Param = React.createClass({
 
     componentDidMount: function () {
         switch (this.props.paramInfo.type) {
-        case 'datetime':
+        case 'date':
             this.addDateTimePicker();
             break;
         default:
@@ -69,12 +72,7 @@ var Param = React.createClass({
     },
 
     render: function () {
-        var helpContent = (
-            <div>
-                <h3>{this.props.paramInfo.teaser}</h3>
-                <div dangerouslySetInnerHTML={{__html: this.props.paramInfo.description}} />
-            </div>
-        );
+        var helpContent = <ParamHelp param={this.props.paramInfo} />
 
         return (
             <div className="param">
