@@ -173,6 +173,7 @@ li.help-option + li {
 .open .dropdown-menu {
     display: block;
     border: 1px solid #DFDFDF;
+    z-index: 9999;
 }
 
 .dropdown-menu a {
