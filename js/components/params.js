@@ -75,7 +75,9 @@ var Param = React.createClass({
                         type={this.props.paramInfo.type || 'text' }
                 />
                 </label>
-                <a className='close' onClick={this.remove}>Remove</a>
+                <a className='close' onClick={this.remove}>
+                    <span className="glyphicon glyphicon-remove"></span>
+                </a>
             </div>
         );
 

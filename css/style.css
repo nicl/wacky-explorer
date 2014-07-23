@@ -304,3 +304,14 @@ a.ui-state-default:hover {
 .teaser .tt-highlight {
     font-weight: normal;
 }
+
+/* Glyphicons */
+
+.glyphicon {
+    vertical-align: middle;
+    color: #dfdfdf;
+}
+
+.glyphicon:hover {
+    color: grey;
+}
