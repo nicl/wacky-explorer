@@ -16,7 +16,6 @@ var Results = React.createClass({
 
         var error = function(xhr, status, err) {
             that.setState({ response: xhr.responseJSON });
-            console.error(request, status, err);
         };
 
         AjaxHelper.loadJson(request, success, error);
