@@ -52,9 +52,6 @@ var App = React.createClass({
             case Actions.constants.BLUR:
                 that.props.store.removeFocus();
                 break;
-            case Actions.constants.UPDATE_PARAM_SEARCH:
-                that.props.store.updateParamSearch(action.data);
-                break;
             case Actions.constants.UPDATE_SEARCH_INPUT:
                 that.props.store.updateSearchInput(action.data);
                 break;
@@ -68,7 +65,6 @@ var App = React.createClass({
     render: function () {
         var params = this.props.store.params;
         var hasFocus = this.props.store.hasFocus;
-        var paramSearch = this.props.store.paramSearch;
         var parameters = this.props.parameters;
         var help = this.props.help;
         var domain = this.props.domain;
@@ -87,7 +83,6 @@ var App = React.createClass({
                 <Params
                     params={params}
                     parameters={parameters}
-                    paramSearch={paramSearch}
                     endpoint={activeEndpoint}
                 />
                 <Help

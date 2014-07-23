@@ -17,9 +17,6 @@ var Store = function () {
     // }
     this.hasFocus = null;
 
-    // Input for the param add/search input (a string)
-    this.paramSearch = '';
-
     // Input for giant search bar
     this.searchInput = '';
 
@@ -33,7 +30,6 @@ var Store = function () {
 
 Store.prototype.addParam = function (param) {
     this.params.push(param);
-    this.paramSearch = '';
     this.notifyAll();
 };
 
@@ -65,16 +61,6 @@ Store.prototype.setFocus = function (type, data) {
 
 Store.prototype.removeFocus = function () {
     this.hasFocus = null;
-    this.notifyAll();
-};
-
-Store.prototype.updateParamSearch = function (value) {
-    this.paramSearch = value;
-
-    if (this.hasFocus.type === PARAM_SEARCH) {
-        this.hasFocus.data = value;
-    }
-
     this.notifyAll();
 };
 

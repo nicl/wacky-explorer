@@ -68,7 +68,6 @@ var Param = React.createClass({
                         ref='input'
                         id='datepicker'
                         className="param-value"
-//                        value={this.props.param.value}
                         placeholder="value..."
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
@@ -229,8 +228,8 @@ var Params = React.createClass({
 
     propTypes: {
         params: React.PropTypes.array.isRequired,
-        paramSearch: React.PropTypes.string.isRequired,
-        parameters: React.PropTypes.array.isRequired
+        parameters: React.PropTypes.array.isRequired,
+        endpoint: React.PropTypes.object.isRequired
     },
 
     render: function () {
