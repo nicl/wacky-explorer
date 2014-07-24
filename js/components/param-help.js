@@ -15,7 +15,10 @@ var ParamHelp = React.createClass({
         }
 
         return (
-            <p className='type-hint hint'>Type: {type} - {typeHint}</p>
+            <div className='type-hint hint'>
+                <h4 className='hint-title'>Type: {type}</h4>
+                <p>{typeHint}</p>
+            </div>
         );
     },
 
@@ -25,7 +28,10 @@ var ParamHelp = React.createClass({
         }
 
         return (
-            <p className='allowed-values-hint hint'>{allowedValues.join(', ')}</p>
+            <div className='allowed-values-hint hint'>
+                <h4 className='hint-title'>Allowed values</h4>
+                <p>{allowedValues.join(', ')}</p>
+            </div>
         );
     },
 

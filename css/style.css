@@ -363,6 +363,11 @@ a.ui-state-default:hover {
     font-size: 16px;
 }
 
-.hint {
-    font-style: italic;
+.hint h4 {
+    margin-top: 10px;
+}
+
+.hint p {
+    margin-top: 0;
+    font-size: 12px;
 }
